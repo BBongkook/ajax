@@ -12,8 +12,8 @@ import utils.Command;
 
 public class AddrServiceImpl implements AddrService {
 	private AddrDAO adao = new AddrDAOImpl();
-	private static final int PAGE_COUNT = 10;
-	private static final int BLOCK_COUNT = 10;
+	private static int pageCount = 10;
+	private static int blockCount = 10;
 	@Override
 	public List<Map<String, String>> selectAddrList(HttpServletRequest request) {
 		Map<String,String> paramMap = Command.getSingleMap(request);
@@ -21,21 +21,29 @@ public class AddrServiceImpl implements AddrService {
 		if(paramMap.get("page")!=null) {
 			page = Integer.parseInt(paramMap.get("page"));
 		}
+		if(paramMap.get("pageCount")!=null) {
+			pageCount = Integer.parseInt(paramMap.get("pageCount"));
+		}
+		if(paramMap.get("blockCount")!=null) {
+			blockCount = Integer.parseInt(paramMap.get("blockCount"));
+		}
+		request.setAttribute("pageCount", pageCount);
+		request.setAttribute("blockCount", blockCount);
 		request.setAttribute("page", page);
-		int lNum = page * PAGE_COUNT;
-		int sNum = lNum -(PAGE_COUNT-1);
+		int lNum = page * pageCount;
+		int sNum = lNum -(pageCount-1);
 		paramMap.put("lNum", lNum+"");
 		paramMap.put("sNum", sNum+"");
 		List<Map<String,String>> addrList = adao.selectAddrList(paramMap);
 		request.setAttribute("list", addrList);
 		int totalCnt = adao.selectTotalAddrCount();
 		request.setAttribute("totalCnt", totalCnt);
-		int totalPageCnt = totalCnt/PAGE_COUNT;
-		if(totalCnt%PAGE_COUNT>0) {
+		int totalPageCnt = totalCnt/pageCount;
+		if(totalCnt%pageCount>0) {
 			totalPageCnt++;
 		}
-		int lBlock = ((page-1)/BLOCK_COUNT+1) * BLOCK_COUNT;
-		int fBlock = lBlock-(BLOCK_COUNT-1);
+		int lBlock = ((page-1)/blockCount+1) * blockCount;
+		int fBlock = lBlock-(blockCount-1);
 		if(lBlock>totalPageCnt) {
 			lBlock = totalPageCnt;
 		}

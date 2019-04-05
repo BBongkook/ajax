@@ -7,6 +7,18 @@
 <title>Insert title here</title>
 </head>
 <body>
+<script>
+	function changePageCount(obj){
+		location.href="/addr/list?page=${page}&pageCount="+obj.value;
+	}
+</script>
+<select name="pageCount" onchange="changePageCount(this)">
+	<option value="10" <c:if test="${pageCount==10}"> selected </c:if>>10</option> 
+	<option value="20" <c:if test="${pageCount==20}"> selected </c:if>>20</option>
+	<option value="30" <c:if test="${pageCount==30}"> selected </c:if>>30</option>
+	<option value="40" <c:if test="${pageCount==40}"> selected </c:if>>40</option>
+	<option value="50" <c:if test="${pageCount==50}"> selected </c:if>>50</option>
+</select>
 <table border="1">
 	<tr>
 		<th>번호</th>
@@ -22,9 +34,25 @@
 	</c:forEach>
 	<tr>
 		<td colspan="3" align="center">
-		<c:forEach var="page" begin="${fBlock}" end="${lBlock}">
-			[${page}]
+		<c:if test="${page>10}">
+			<a href="/addr/list?page=1">◀</a>
+			<a href="/addr/list?page=${page-10}">◁</a>
+		</c:if>	
+		
+		<c:forEach var="p" begin="${fBlock}" end="${lBlock}">
+			<c:if test="${p==page}">			
+				<b>[${p}]</b>
+			</c:if>
+			<c:if test="${p!=page}">
+				<a href="/addr/list?page=${p}">[${p}]</a>
+			</c:if>
 		</c:forEach>
+			<c:if test="${(totalPageCnt-10)>=page}">
+				<a href="/addr/list?page=${page+10}">▷</a>
+			</c:if>
+			<c:if test="${totalPageCnt!=page}">
+				<a href="/addr/list?page=${totalPageCnt}">▶</a>
+			</c:if>
 		</td>
 		
 	</tr>

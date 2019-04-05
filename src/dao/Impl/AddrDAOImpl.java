@@ -14,7 +14,7 @@ import db.DBCon;
 public class AddrDAOImpl implements AddrDAO {
 	private static String selectAddrListSql = "select * from \r\n" + 
 			"(select rownum as rown, addr.* FROM \r\n" + 
-			"(select * from address order by ad_num desc ) addr \r\n" + 
+			"(select * from address order by ad_num ) addr \r\n" + 
 			"where rownum <= ?) \r\n" + 
 			"where rown >=?";
 	private static String selectAddrCount = "select count(1) from address";
