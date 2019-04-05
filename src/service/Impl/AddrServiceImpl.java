@@ -28,6 +28,8 @@ public class AddrServiceImpl implements AddrService {
 		if(paramMap.get("blockCount")!=null) {
 			blockCount = Integer.parseInt(paramMap.get("blockCount"));
 		}
+		String ad_dong = paramMap.get("ad_dong");
+		request.setAttribute("ad_dong", ad_dong);
 		request.setAttribute("pageCount", pageCount);
 		request.setAttribute("blockCount", blockCount);
 		request.setAttribute("page", page);

@@ -51,10 +51,10 @@
 	<tr>
 		<td colspan="7" align="center">
 		<c:if test="${1!=page}">
-			<a href="/addr/list?page=${1}&pageCount=${pageCount}">◀</a>
+			<a href="/addr/list?page=${1}&pageCount=${pageCount}&ad_dong=${ad_dong}">◀</a>
 		</c:if>	
 		<c:if test="${page>=11}">
-			<a href="/addr/list?page=${page-10}&pageCount=${pageCount}">◁</a>
+			<a href="/addr/list?page=${page-10}&pageCount=${pageCount}&ad_dong=${ad_dong}">◁</a>
 		</c:if>
 		
 		<c:forEach var="p" begin="${fBlock}" end="${lBlock}">
@@ -67,10 +67,10 @@
 		</c:forEach>
 		
 			<c:if test="${(totalPageCnt-10)>=page}">
-				<a href="/addr/list?page=${page+10}&pageCount=${pageCount}">▷</a>
+				<a href="/addr/list?page=${page+10}&pageCount=${pageCount}&ad_dong=${ad_dong}">▷</a>
 			</c:if>
 			<c:if test="${totalPageCnt!=page}">
-				<a href="/addr/list?page=${totalPageCnt}&pageCount=${pageCount}">▶</a>
+				<a href="/addr/list?page=${totalPageCnt}&pageCount=${pageCount}&ad_dong=${ad_dong}">▶</a>
 			</c:if>
 		</td>
 		
