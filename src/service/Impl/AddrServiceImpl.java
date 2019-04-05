@@ -12,12 +12,13 @@ import utils.Command;
 
 public class AddrServiceImpl implements AddrService {
 	private AddrDAO adao = new AddrDAOImpl();
-	private static int pageCount = 10;
-	private static int blockCount = 10;
+	
 	@Override
 	public List<Map<String, String>> selectAddrList(HttpServletRequest request) {
 		Map<String,String> paramMap = Command.getSingleMap(request);
 		int page = 1;
+		int pageCount = 10;
+		int blockCount = 10;
 		if(paramMap.get("page")!=null) {
 			page = Integer.parseInt(paramMap.get("page"));
 		}
@@ -36,7 +37,7 @@ public class AddrServiceImpl implements AddrService {
 		paramMap.put("sNum", sNum+"");
 		List<Map<String,String>> addrList = adao.selectAddrList(paramMap);
 		request.setAttribute("list", addrList);
-		int totalCnt = adao.selectTotalAddrCount();
+		int totalCnt = adao.selectTotalAddrCount(paramMap);
 		request.setAttribute("totalCnt", totalCnt);
 		int totalPageCnt = totalCnt/pageCount;
 		if(totalCnt%pageCount>0) {
@@ -56,7 +57,8 @@ public class AddrServiceImpl implements AddrService {
 
 	@Override
 	public int selectTotalAddrCount() {
-		return adao.selectTotalAddrCount();
+		//return adao.selectTotalAddrCount();
+		return 0;
 	}
 
 }

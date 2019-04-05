@@ -5,5 +5,5 @@ import java.util.Map;
 
 public interface AddrDAO {
 	public List<Map<String,String>> selectAddrList(Map<String,String> addr);
-	public int selectTotalAddrCount();
+	public int selectTotalAddrCount(Map<String,String> addr);
 }

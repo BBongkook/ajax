@@ -11,7 +11,13 @@
 	function changePageCount(obj){
 		location.href="/addr/list?page=${page}&pageCount="+obj.value;
 	}
+	function search(){
+		var ad_dong = document.querySelector('#ad_dong').value;
+		location.href="/addr/list?pageCount=${pageCount}&ad_dong="+ad_dong;
+	}
 </script>
+<label for="ad_dong">읍면동 : </label><input type="text" name="ad_dong" id="ad_dong">
+<button onclick="search()">검색</button>
 <select name="pageCount" onchange="changePageCount(this)">
 	<option value="10" <c:if test="${pageCount==10}"> selected </c:if>>10</option> 
 	<option value="20" <c:if test="${pageCount==20}"> selected </c:if>>20</option>
@@ -24,40 +30,53 @@
 		<th>번호</th>
 		<th>시도</th>
 		<th>구군</th>
+		<th>동</th>
+		<th>리</th>
+		<th>번지</th>
+		<th>호</th>
+		
 	</tr>
 	<c:forEach items="${list}" var="addr">
 		<tr>
 			<td>${addr.ad_num}</td>
 			<td>${addr.ad_sido}</td>
 			<td>${addr.ad_gugun}</td>
+			<td>${addr.ad_dong}</td>
+			<td>${addr.ad_lee}</td>
+			<td>${addr.ad_bunji}</td>
+			<td>${addr.ad_ho}</td>
+			
 		</tr>
 	</c:forEach>
 	<tr>
-		<td colspan="3" align="center">
-		<c:if test="${page>10}">
-			<a href="/addr/list?page=1">◀</a>
-			<a href="/addr/list?page=${page-10}">◁</a>
+		<td colspan="7" align="center">
+		<c:if test="${1!=page}">
+			<a href="/addr/list?page=${1}&pageCount=${pageCount}">◀</a>
 		</c:if>	
+		<c:if test="${page>=11}">
+			<a href="/addr/list?page=${page-10}&pageCount=${pageCount}">◁</a>
+		</c:if>
 		
 		<c:forEach var="p" begin="${fBlock}" end="${lBlock}">
 			<c:if test="${p==page}">			
 				<b>[${p}]</b>
 			</c:if>
 			<c:if test="${p!=page}">
-				<a href="/addr/list?page=${p}">[${p}]</a>
+				<a href="/addr/list?page=${p}&pageCount=${pageCount}&ad_dong=${ad_dong}">[${p}]</a>
 			</c:if>
 		</c:forEach>
+		
 			<c:if test="${(totalPageCnt-10)>=page}">
-				<a href="/addr/list?page=${page+10}">▷</a>
+				<a href="/addr/list?page=${page+10}&pageCount=${pageCount}">▷</a>
 			</c:if>
 			<c:if test="${totalPageCnt!=page}">
-				<a href="/addr/list?page=${totalPageCnt}">▶</a>
+				<a href="/addr/list?page=${totalPageCnt}&pageCount=${pageCount}">▶</a>
 			</c:if>
 		</td>
 		
 	</tr>
 	<tr>
-		<td colspan="3" align="right">총 갯수 : ${totalCnt}</td>
+		<td colspan="7" align="right">총 갯수 : ${totalCnt}</td>
 	</tr>
 </table>
 </form>
