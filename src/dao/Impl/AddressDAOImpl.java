@@ -16,7 +16,7 @@ public class AddressDAOImpl implements AddressDAO {
 		int cnt = 0;
 		
 		try {
-			PreparedStatement ps = DBCon.getCon().prepareStatement(INSERT_ADDRESS);
+			PreparedStatement ps = DBCon.open().prepareStatement(INSERT_ADDRESS);
 			for(Map<String,String> addr : addrList) {
 				ps.setString(1, addr.get("ad_code"));
 				ps.setString(2, addr.get("ad_sido"));

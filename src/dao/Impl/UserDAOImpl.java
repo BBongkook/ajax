@@ -17,7 +17,7 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public int insertUser(Map<String, String> user) {
 		try {
-			PreparedStatement ps = DBCon.getCon().prepareStatement(INSERT_USER);
+			PreparedStatement ps = DBCon.open().prepareStatement(INSERT_USER);
 			ps.setString(1, user.get("uiName"));
 			ps.setString(2, user.get("uiId"));
 			ps.setString(3, user.get("uiPwd"));
@@ -35,7 +35,7 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public boolean compareUser(Map<String, String> user) {
 		try {
-			PreparedStatement ps = DBCon.getCon().prepareStatement(COMPARE_USER);
+			PreparedStatement ps = DBCon.open().prepareStatement(COMPARE_USER);
 			ps.setString(1, user.get("uiId"));
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
@@ -66,7 +66,7 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public Map<String, String> selectUserByUiId(String uiId, String uiPwd) {
 		try {
-			PreparedStatement ps = DBCon.getCon().prepareStatement(selectUserByUiId);
+			PreparedStatement ps = DBCon.open().prepareStatement(selectUserByUiId);
 			ps.setString(1, uiId);
 			ps.setString(2, uiPwd);
 			ResultSet rs = ps.executeQuery();

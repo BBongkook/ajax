@@ -49,6 +49,12 @@ public class Command {
 		}
 		return pMap;
 	}
+	public static void goPage(HttpServletRequest request,
+			HttpServletResponse response,String url) 
+					throws ServletException, IOException {
+		RequestDispatcher rd = request.getRequestDispatcher(url);
+		rd.forward(request, response);
+	}
 	public static <T> void printJSON(HttpServletResponse response, T obj) throws IOException {
 		response.setContentType("application/json;charset=utf-8");
 		PrintWriter pw = response.getWriter();

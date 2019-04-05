@@ -23,7 +23,7 @@ public class MovieDAOImpl implements MovieDAO {
 	@Override
 	public List<Map<String, String>> selectMovieList() {
 		try {
-			PreparedStatement ps = DBCon.getCon().prepareStatement(SELECT_LIST);
+			PreparedStatement ps = DBCon.open().prepareStatement(SELECT_LIST);
 			ResultSet rs = ps.executeQuery();
 			List<Map<String, String>> movieList = new ArrayList<>();
 			while (rs.next()) {
@@ -51,7 +51,7 @@ public class MovieDAOImpl implements MovieDAO {
 		/*"insert into movie_info(mi_num, mi_name, mi_year, mi_national, mi_vendor, mi_director) "
 				+ " values(seq_mi_num.nextval,?,?,?,?,?)"*/
 		try {
-			PreparedStatement ps = DBCon.getCon().prepareStatement(INSERT_MOVIE);
+			PreparedStatement ps = DBCon.open().prepareStatement(INSERT_MOVIE);
 			ps.setString(1, movie.get("mi_name"));
 			ps.setString(2, movie.get("mi_year"));
 			ps.setString(3, movie.get("mi_national"));
@@ -71,7 +71,7 @@ public class MovieDAOImpl implements MovieDAO {
 		//"update set mi_name=?, mi_year=?, mi_national, mi_vendor, mi_director from movie_info where mi_num=?";
 		
 		try {
-			PreparedStatement ps = DBCon.getCon().prepareStatement(UPDATE_MOVIE_BY_MI_NUM);
+			PreparedStatement ps = DBCon.open().prepareStatement(UPDATE_MOVIE_BY_MI_NUM);
 			ps.setString(1, movie.get("mi_name"));
 			ps.setString(2, movie.get("mi_year"));
 			ps.setString(3, movie.get("mi_national"));
@@ -91,7 +91,7 @@ public class MovieDAOImpl implements MovieDAO {
 	public int deleteMovie(int miNum) {
 		//"delete from movie_info where mi_num=?";
 		try {
-			PreparedStatement ps = DBCon.getCon().prepareStatement(DELETE_MOVIE_BY_MI_NUM);
+			PreparedStatement ps = DBCon.open().prepareStatement(DELETE_MOVIE_BY_MI_NUM);
 			ps.setInt(1, miNum);
 			return ps.executeUpdate();
 		} catch (SQLException e) {
@@ -106,7 +106,7 @@ public class MovieDAOImpl implements MovieDAO {
 	public Map<String, String> selectMovieByMiNum(int miNum) {
 		
 		try {
-			PreparedStatement ps = DBCon.getCon().prepareStatement(SELECT_MOVIE_BY_MI_NUM);
+			PreparedStatement ps = DBCon.open().prepareStatement(SELECT_MOVIE_BY_MI_NUM);
 			ps.setInt(1, miNum);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
