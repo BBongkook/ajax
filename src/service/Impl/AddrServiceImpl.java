@@ -19,10 +19,10 @@ public class AddrServiceImpl implements AddrService {
 		int page = 1;
 		int pageCount = 10;
 		int blockCount = 10;
-		if(paramMap.get("page")!=null) {
+		if(paramMap.get("page")!=null && !"".equals(paramMap.get("page"))) {
 			page = Integer.parseInt(paramMap.get("page"));
 		}
-		if(paramMap.get("pageCount")!=null) {
+		if(paramMap.get("pageCount")!=null && !"".equals(paramMap.get("pageCount"))) {
 			pageCount = Integer.parseInt(paramMap.get("pageCount"));
 		}
 		if(paramMap.get("blockCount")!=null) {
@@ -61,6 +61,24 @@ public class AddrServiceImpl implements AddrService {
 	public int selectTotalAddrCount() {
 		//return adao.selectTotalAddrCount();
 		return 0;
+	}
+
+	@Override
+	public void selectAddr(HttpServletRequest request) {
+		Map<String,String> paramMap = Command.getSingleMap(request);
+		int page = 1;
+		int pageCount = 10;
+		if(paramMap.get("page")!=null) {
+			page = Integer.parseInt(paramMap.get("page"));
+		}
+		if(paramMap.get("pageCount")!=null) {
+			pageCount = Integer.parseInt(paramMap.get("pageCount"));
+		}
+		request.setAttribute("page", page);
+		request.setAttribute("pageCount", pageCount);
+		Map<String,String> addrMap = adao.selectAddr(paramMap);
+		request.setAttribute("addr", addrMap);
+		
 	}
 
 }

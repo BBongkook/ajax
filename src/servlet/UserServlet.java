@@ -1,7 +1,9 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
@@ -37,6 +39,7 @@ public class UserServlet extends HttpServlet {
 			user.put("uiName", uiName);
 			user.put("uiEmail", uiEmail);
 			if(us.insertUser(user)==1) { // 이부분은 원래 서비스단에서 하는것이 맞는것.
+				
 				request.setAttribute("msg", "회원가입에 성공하였습니다.");
 				request.setAttribute("url", "/");
 			}
@@ -63,9 +66,17 @@ public class UserServlet extends HttpServlet {
 			Map<String,String> user = us.login(uiId, uiPwd);
 			request.setAttribute("msg","아이디나 비밀번호가 잘못되었습니다.");
 			if(user!=null) {
+				if(request.getServletContext().getAttribute("userMap")==null){
+					request.getServletContext().setAttribute("userMap", new HashMap<>());
+				}
+				Map<String,List<String>> userMap = (Map<String,List<String>>)
+						request.getServletContext().getAttribute("userMap");
+				userMap.put(uiId, new ArrayList<>());
+				// 겟 서블릿은 어플리케이션스코프 를 가져오다. 겟 세션처럼
 				HttpSession session = request.getSession();
 				session.setAttribute("user", user);
 				request.setAttribute("msg","로그인에 성공하였습니다.");
+				
 			}
 			request.setAttribute("url", "/");
 			RequestDispatcher rd = request.getRequestDispatcher("/views/msg/result");
