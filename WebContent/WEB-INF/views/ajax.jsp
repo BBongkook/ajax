@@ -17,10 +17,21 @@
 			document.write(addr.ad_num + "," + addr.ad_sido);
 		}
 	}
-	var au = new AjaxUtil();
+	
+/* 	var xhr = new XMLHttpRequest();
+	xhr.open('GET','/addr2/list');
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState==4 && xhr.status==200){
+			callback(xhr.response);
+		}
+	}
+	xhr.send(); */
+	
+	
+	/* var au = new AjaxUtil();
 	au.open('/addr2/list');
 	au.setCallback(callback);
-	au.send();
+	au.send(); */
 	
 	
 	
