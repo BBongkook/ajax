@@ -18,6 +18,13 @@
 		}
 	}
 	
+	/* var alert_tmp = window.alert;
+	
+	window.alert = function(str){
+		alert_tmp('야 얼랏좀 그만해 :'+str);
+	}
+	alert(123); */
+	
 /* 	var xhr = new XMLHttpRequest();
 	xhr.open('GET','/addr2/list');
 	xhr.onreadystatechange = function(){
