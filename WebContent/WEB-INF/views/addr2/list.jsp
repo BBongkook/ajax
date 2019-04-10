@@ -79,9 +79,9 @@
 		xhr.send(JSON.stringify(params));
 					
 	}
-	function deleteAddr(num){
+	function deleteAddr(){
 		var xhr = new XMLHttpRequest();
-		var inputs = document.querySelector('input[id]');
+		var inputs = document.querySelectorAll('input[id]');
 		var params ={};
 		for(var i=0; i<inputs.length; i++){
 			var input = inputs[i];
