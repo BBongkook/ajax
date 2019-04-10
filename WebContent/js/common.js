@@ -31,7 +31,7 @@ var AjaxUtil = function(){
 		console.log(res);			
 	}
 	this.setCallback = function(call){
-		//this.callback = call;
+
 		xhr.callback=call;
 	}
 	this.send = function(){

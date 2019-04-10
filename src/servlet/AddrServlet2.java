@@ -38,7 +38,36 @@ public class AddrServlet2 extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		String cmd = Command.getCmd(request);
+		Map<String,String> param = Command.fromJSON(request);
+		if("update".equals(cmd)) {
+		int result = as.updateAddr(param);
+		
+		Map<String,String> rMap = new HashMap<>();
+		rMap.put("adNum",param.get("adNum"));
+		if(result==1) {
+			rMap.put("msg", "수정 성공");
+			rMap.put("update", "true");
+			Command.printJSON(response, rMap);
+		}else {
+			rMap.put("msg", "수정 실패");
+			rMap.put("update", "false");
+			Command.printJSON(response, rMap);
+		}
+		}else if("delete".equals(cmd)) {
+			Map<String,String> dMap = new HashMap<>();
+			int result = as.deleteAddr(Integer.parseInt(param.get("adNum")));
+			if(result==1) {
+				dMap.put("msg", "삭제 성공");
+				dMap.put("update", "true");
+				Command.printJSON(response, dMap);
+			}else {
+				dMap.put("msg", "삭제 실패");
+				dMap.put("update", "false");
+				Command.printJSON(response, dMap);
+			}
+		}
 	}
+		
 
 }

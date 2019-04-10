@@ -81,4 +81,16 @@ public class AddrServiceImpl implements AddrService {
 		
 	}
 
+	@Override
+	public int updateAddr(Map<String, String> uMap) {
+		// TODO Auto-generated method stub
+		return adao.updateAddr(uMap);
+	}
+
+	@Override
+	public int deleteAddr(int adNum) {
+		// TODO Auto-generated method stub
+		return adao.deleteAddr(adNum);
+	}
+
 }

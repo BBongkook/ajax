@@ -19,6 +19,8 @@ public class AddrDAOImpl implements AddrDAO {
 			"where rown >=?";
 	private static String selectAddrCount = "select count(1) from address $where$";
 	private static String selectAddr = "select * from address where 1=1 and ad_num=?";
+	private static String updateAddr = "update address set ad_code=?,ad_sido=?,ad_gugun=?,ad_dong=?,ad_lee=?,ad_bunji=?,ad_ho=? where ad_num=?";
+	private static String deleteAddr = "delete from address where ad_num=?";
 	@Override
 	public List<Map<String, String>> selectAddrList(Map<String, String> addr) {
 		String adDong = addr.get("ad_dong");
@@ -108,6 +110,44 @@ public class AddrDAOImpl implements AddrDAO {
 		}
 		
 		return null;
+	}
+	@Override
+	public int updateAddr(Map<String, String> uMap) {
+		try {
+			PreparedStatement ps = DBCon.open().prepareStatement(updateAddr);
+			//"update address set=ad_code=?,ad_sido=?,ad_gugun=?,ad_dong=?,ad_lee=?,
+			//ad_bunji=?,ad_ho=? where ad_num=?";
+			ps.setString(1, uMap.get("adCode"));
+			ps.setString(2, uMap.get("adSido"));
+			ps.setString(3, uMap.get("adGugun"));
+			ps.setString(4, uMap.get("adDong"));
+			ps.setString(5, uMap.get("adLee"));
+			ps.setString(6, uMap.get("adBunji"));
+			ps.setString(7, uMap.get("adHo"));
+			ps.setString(8, uMap.get("adNum"));
+			return ps.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			DBCon.close();
+		}
+		return 0;
+	}
+	@Override
+	public int deleteAddr(int adNum) {
+		try {
+			PreparedStatement ps = DBCon.open().prepareStatement(deleteAddr);
+			ps.setInt(1, adNum);
+			return ps.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBCon.close();
+		}
+		
+		return 0;
 	}
 	
 	

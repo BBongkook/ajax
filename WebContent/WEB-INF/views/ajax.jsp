@@ -11,12 +11,20 @@
 
 <div id="rDiv"></div>
 	<script>
+
 	function callback(res){
 		var res = JSON.parse(res);
 		for(var addr of res.list){
 			document.write(addr.ad_num + "," + addr.ad_sido);
 		}
 	}
+	
+	var au = new AjaxUtil();
+	au.open('/addr2/list');
+	au.setCallback(callback);
+	au.send();
+	
+	
 	
 	/* var alert_tmp = window.alert;
 	
@@ -35,10 +43,10 @@
 	xhr.send(); */
 	
 	
-	/* var au = new AjaxUtil();
+	var au = new AjaxUtil();
 	au.open('/addr2/list');
 	au.setCallback(callback);
-	au.send(); */
+	au.send(); 
 	
 	
 	
