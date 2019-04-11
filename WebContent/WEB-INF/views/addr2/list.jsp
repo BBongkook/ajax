@@ -132,6 +132,7 @@
 						html += '<a href="/views/addr2/list?pageCount='+res.pageCount+'&page='+i+'&ad_dong='+res.ad_dong+'">['+i+']</a>';
 					}
 				}
+				html += '<a href="/views/addr2/list?page='+(res.page+10)+'&pageCount=${pageCount}&ad_dong=${ad_dong}">▷'
 				html += '</td>';
 				html += '</tr>';
 				

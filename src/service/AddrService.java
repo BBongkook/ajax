@@ -11,4 +11,6 @@ public interface AddrService {
 	public int selectTotalAddrCount();
 	public int updateAddr(Map<String,String> uMap);
 	public int deleteAddr(int adNum);
+	public List<String> selectAdsido();
+	public List<String> selectAdGugunList(String adSido);
 }

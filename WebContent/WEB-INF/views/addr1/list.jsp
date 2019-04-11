@@ -16,6 +16,19 @@
 		location.href="/addr/list?pageCount=${pageCount}&ad_dong="+ad_dong;
 	}
 </script>
+
+<select name ="ad_sido">
+<c:forEach items="${asList}" var="sido">
+	<option value="${sido}">${sido}</option>
+</c:forEach>
+</select>
+<select name ="ad_gugun">
+<c:forEach items="${agList}" var="gugun">
+	<option value="${gugun}">${gugun}</option>
+</c:forEach>
+</select>
+
+
 <label for="ad_dong">읍면동 : </label><input type="text" name="ad_dong" id="ad_dong">
 <button onclick="search()">검색</button>
 <select name="pageCount" onchange="changePageCount(this)">
