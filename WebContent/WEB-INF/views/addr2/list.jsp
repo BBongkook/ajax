@@ -25,7 +25,6 @@
 		<th>리</th>
 		<th>번지</th>
 		<th>호</th>
-
 		
 	</tr>
 	<tbody id="tBody"></tbody>
