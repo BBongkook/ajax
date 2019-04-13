@@ -44,25 +44,25 @@ public class AddrDAOImpl implements AddrDAO {
 				sql = selectAddrListSql.replace("$where$"," where ad_dong like '%' || ? || '%' AND ad_sido like '%' || ? || '%'");
 			}
 			if(adSido!= null && adGugun!=null) {
-				sql = selectAddrListSql.replace("$where$"," where ad_gugun=? AND ad_sido like '%' || ? || '%'");
+				sql = selectAddrListSql.replace("$where$"," where ad_gugun like '%' || ? || '%' AND ad_sido like '%' || ? || '%'");
 			}
 			if(adDong!=null && adSido!=null && adGugun!=null) {
-				sql = selectAddrListSql.replace("$where$"," where ad_dong like '%' || ? || '%' AND ad_sido like '%' || ? || '%' AND ad_gugun=?");
+				sql = selectAddrListSql.replace("$where$"," where ad_dong like '%' || ? || '%' AND ad_sido like '%' || ? || '%' AND ad_gugun like '%' || ? || '%'");
 			}
 			PreparedStatement ps = DBCon.open().prepareStatement(sql);
 			ps.setString(1, addr.get("lNum"));
 			ps.setString(2, addr.get("sNum"));
-			if(adDong!=null) {//&& "".equals(adSido)) {
+			if(adDong!=null && !"".equals(adDong)) {//&& "".equals(adSido)) {
 				ps.setString(1, adDong);
 				ps.setString(2, addr.get("lNum"));
 				ps.setString(3, addr.get("sNum"));
 			}
-			if(adSido!=null) {//&& "".equals(adDong)) {
+			if(adSido!=null && !"".equals(adSido)) {//&& "".equals(adDong)) {
 				ps.setString(1, adSido);
 				ps.setString(2, addr.get("lNum"));
 				ps.setString(3, addr.get("sNum"));
 			}
-			if(adGugun!=null) {
+			if(adGugun!=null && !"".equals(adGugun)) {
 				ps.setString(1, adGugun);
 				ps.setString(2, addr.get("lNum"));
 				ps.setString(3, addr.get("sNum"));
@@ -73,7 +73,7 @@ public class AddrDAOImpl implements AddrDAO {
 				ps.setString(3, addr.get("lNum"));
 				ps.setString(4, addr.get("sNum"));
 			}
-			if(adSido!= null && adGugun!=null) {
+			if(adSido!= null && adGugun!=null && !"".equals(adDong)) {
 				ps.setString(1, adGugun);
 				ps.setString(2, adSido);
 				ps.setString(3, addr.get("lNum"));
@@ -83,8 +83,8 @@ public class AddrDAOImpl implements AddrDAO {
 				ps.setString(1, adDong);
 				ps.setString(2, adSido);
 				ps.setString(3, adGugun);
-				ps.setString(3, addr.get("lNum"));
-				ps.setString(4, addr.get("sNum"));
+				ps.setString(4, addr.get("lNum"));
+				ps.setString(5, addr.get("sNum"));
 			}
 			ResultSet rs = ps.executeQuery();
 			List<Map<String,String>> addrList = new ArrayList<>();
@@ -128,20 +128,20 @@ public class AddrDAOImpl implements AddrDAO {
 			sql = selectAddrCount.replace("$where$"," where ad_dong like '%' || ? || '%' AND ad_sido like '%' || ? || '%'");
 		}
 		if(adSido!= null && adGugun!=null) {
-			sql = selectAddrCount.replace("$where$"," where ad_gugun=? AND ad_sido like '%' || ? || '%'");
+			sql = selectAddrCount.replace("$where$"," where ad_gugun like '%' || ? || '%' AND ad_sido like '%' || ? || '%'");
 		}
 		if(adDong!=null && adSido!=null && adGugun!=null) {
-			sql = selectAddrCount.replace("$where$"," where ad_dong like '%' || ? || '%' AND ad_sido like '%' || ? || '%' AND ad_gugun=?");
+			sql = selectAddrCount.replace("$where$"," where ad_dong like '%' || ? || '%' AND ad_sido like '%' || ? || '%' AND ad_gugun like '%' || ? || '%' ");
 		}
 		try {
 			PreparedStatement ps = DBCon.open().prepareStatement(sql);
-			if(adDong!=null && adSido==null) {
+			if(adDong!=null) {
 				ps.setString(1, adDong);
 			}
-			if(adSido!=null && adDong==null) {
+			if(adSido!=null) {
 				ps.setString(1, adSido);
 			}
-			if(adSido!=null && adGugun!=null) {
+			if(adGugun!=null) {
 				ps.setString(1, adGugun);
 			}
 			if(adDong!=null && adSido!=null) {

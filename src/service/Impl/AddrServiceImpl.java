@@ -19,7 +19,7 @@ public class AddrServiceImpl implements AddrService {
 		int page = 1;
 		int pageCount = 10;
 		int blockCount = 10;
-		String ad_dong = null;
+		//String ad_dong = null;
 		if(paramMap.get("page")!=null && !"".equals(paramMap.get("page"))) {
 			page = Integer.parseInt(paramMap.get("page"));
 		}
@@ -29,14 +29,14 @@ public class AddrServiceImpl implements AddrService {
 		if(paramMap.get("blockCount")!=null) {
 			blockCount = Integer.parseInt(paramMap.get("blockCount"));
 		}
-		if(paramMap.get("ad_dong")!=null && !"".equals(paramMap.get("ad_dong"))) {
-			ad_dong = paramMap.get("ad_dong");
-		} else {
-			paramMap.put("ad_dong", ad_dong);
-		}	
+		/*
+		 * if(paramMap.get("ad_dong")!=null && !"".equals(paramMap.get("ad_dong"))) {
+		 * ad_dong = paramMap.get("ad_dong"); } else { paramMap.put("ad_dong", ad_dong);
+		 * }
+		 */
 		String ad_sido = paramMap.get("ad_sido");
 		String ad_gugun = paramMap.get("ad_gugun");
-		ad_dong = paramMap.get("ad_dong");
+		String ad_dong = paramMap.get("ad_dong");
 		request.setAttribute("ad_sido", ad_sido);
 		request.setAttribute("ad_dong", ad_dong);
 		request.setAttribute("ad_gugun", ad_gugun);
