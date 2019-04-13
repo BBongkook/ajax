@@ -27,18 +27,64 @@ public class AddrDAOImpl implements AddrDAO {
 	@Override
 	public List<Map<String, String>> selectAddrList(Map<String, String> addr) {
 		String adDong = addr.get("ad_dong");
+		String adSido = addr.get("ad_sido");
+		String adGugun = addr.get("ad_gugun");
 		String sql = selectAddrListSql.replace("$where$", "");
 		try {
 			if(adDong!=null) {
 				sql = selectAddrListSql.replace("$where$"," where ad_dong like '%' || ? || '%'");
 			}
+			if(adSido!=null) {
+				sql = selectAddrListSql.replace("$where$"," where ad_sido like '%' || ? || '%'");
+			}
+			if(adGugun!=null) {
+				sql = selectAddrListSql.replace("$where$"," where ad_gugun=?");
+			}
+			if(adDong!=null && adSido!=null) {
+				sql = selectAddrListSql.replace("$where$"," where ad_dong like '%' || ? || '%' AND ad_sido like '%' || ? || '%'");
+			}
+			if(adSido!= null && adGugun!=null) {
+				sql = selectAddrListSql.replace("$where$"," where ad_gugun=? AND ad_sido like '%' || ? || '%'");
+			}
+			if(adDong!=null && adSido!=null && adGugun!=null) {
+				sql = selectAddrListSql.replace("$where$"," where ad_dong like '%' || ? || '%' AND ad_sido like '%' || ? || '%' AND ad_gugun=?");
+			}
 			PreparedStatement ps = DBCon.open().prepareStatement(sql);
 			ps.setString(1, addr.get("lNum"));
 			ps.setString(2, addr.get("sNum"));
-			if(adDong!=null) {
+			if(adDong!=null) {//&& "".equals(adSido)) {
 				ps.setString(1, adDong);
 				ps.setString(2, addr.get("lNum"));
 				ps.setString(3, addr.get("sNum"));
+			}
+			if(adSido!=null) {//&& "".equals(adDong)) {
+				ps.setString(1, adSido);
+				ps.setString(2, addr.get("lNum"));
+				ps.setString(3, addr.get("sNum"));
+			}
+			if(adGugun!=null) {
+				ps.setString(1, adGugun);
+				ps.setString(2, addr.get("lNum"));
+				ps.setString(3, addr.get("sNum"));
+			}
+			if(adDong!=null && adSido!=null ) {//&& !"".equals(adDong) && !"".equals(adSido)) {
+				ps.setString(1, adDong);
+				ps.setString(2, adSido);
+				ps.setString(3, addr.get("lNum"));
+				ps.setString(4, addr.get("sNum"));
+			}
+			if(adSido!= null && adGugun!=null) {
+				ps.setString(1, adGugun);
+				ps.setString(2, adSido);
+				ps.setString(3, addr.get("lNum"));
+				ps.setString(4, addr.get("sNum"));
+			}
+			if(adDong!=null && adSido!=null && adGugun!=null ) {//&& !"".equals(adDong) && !"".equals(adSido)) {
+				ps.setString(1, adDong);
+				ps.setString(2, adSido);
+				ps.setString(3, adGugun);
+				ps.setString(3, addr.get("lNum"));
+				ps.setString(4, addr.get("sNum"));
 			}
 			ResultSet rs = ps.executeQuery();
 			List<Map<String,String>> addrList = new ArrayList<>();
@@ -66,14 +112,50 @@ public class AddrDAOImpl implements AddrDAO {
 	@Override
 	public int selectTotalAddrCount(Map<String,String> addr) {
 		String adDong = addr.get("ad_dong");
+		String adSido = addr.get("ad_sido");
+		String adGugun = addr.get("ad_gugun");
 		String sql = selectAddrCount.replace("$where$", "");
 		if(adDong!=null) {
 			sql = selectAddrCount.replace("$where$"," where ad_dong like '%' || ? || '%'");
 		}
+		if(adSido!=null) {
+			sql = selectAddrCount.replace("$where$"," where ad_sido like '%' || ? || '%'");
+		}
+		if(adGugun!=null) {
+			sql = selectAddrCount.replace("$where$"," where ad_gugun=?");
+		}
+		if(adDong!=null && adSido!=null) {
+			sql = selectAddrCount.replace("$where$"," where ad_dong like '%' || ? || '%' AND ad_sido like '%' || ? || '%'");
+		}
+		if(adSido!= null && adGugun!=null) {
+			sql = selectAddrCount.replace("$where$"," where ad_gugun=? AND ad_sido like '%' || ? || '%'");
+		}
+		if(adDong!=null && adSido!=null && adGugun!=null) {
+			sql = selectAddrCount.replace("$where$"," where ad_dong like '%' || ? || '%' AND ad_sido like '%' || ? || '%' AND ad_gugun=?");
+		}
 		try {
 			PreparedStatement ps = DBCon.open().prepareStatement(sql);
-			if(adDong!=null) {
+			if(adDong!=null && adSido==null) {
 				ps.setString(1, adDong);
+			}
+			if(adSido!=null && adDong==null) {
+				ps.setString(1, adSido);
+			}
+			if(adSido!=null && adGugun!=null) {
+				ps.setString(1, adGugun);
+			}
+			if(adDong!=null && adSido!=null) {
+				ps.setString(1, adDong);
+				ps.setString(2, adSido);
+			}
+			if(adSido!= null && adGugun!=null) {
+				ps.setString(1, adGugun);
+				ps.setString(2, adSido);
+			}
+			if(adDong!=null && adSido!=null && adGugun!=null) {
+				ps.setString(1, adDong);
+				ps.setString(2, adSido);
+				ps.setString(3, adGugun);
 			}
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
@@ -176,11 +258,13 @@ public class AddrDAOImpl implements AddrDAO {
 				PreparedStatement ps = con.prepareStatement(selectAdGugun);) {
 				ps.setString(1, adSido);
 				ResultSet rs = ps.executeQuery();
-				List<String> adGugunList = new ArrayList<>();
+				List<String> gList = new ArrayList<>();
 				while(rs.next()) {
-					adGugunList.add(rs.getString("ad_gugun"));
+					
+					
+					gList.add(rs.getString("ad_gugun"));
 				}
-				return adGugunList;
+				return gList;
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

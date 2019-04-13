@@ -9,25 +9,34 @@
 <body>
 <script>
 	function changePageCount(obj){
-		location.href="/addr/list?page=${page}&pageCount="+obj.value+"&ad_dong=${ad_dong}";
+		location.href="/addr/list?page=${page}&pageCount="+obj.value+"&ad_dong=${ad_dong}&ad_sido=${ad_sido}&ad_gugun=${ad_gugun}";
 	}
 	function search(){
 		var ad_dong = document.querySelector('#ad_dong').value;
-		location.href="/addr/list?pageCount=${pageCount}&ad_dong="+ad_dong;
+		location.href="/addr/list?page=${page}&pageCount=${pageCount}&ad_gugun=${ad_gugun}&ad_sido=${ad_sido}&ad_dong="+ad_dong;
+	}
+	function changeSelectSido(){
+		var sido = document.getElementById("sido");
+		var selectSido = sido.options[sido.selectedIndex].value;
+		location.href="/addr/list?page=${page}&pageCount=${pageCount}&ad_sido="+selectSido;
+	}
+	function changeSelectGugun(){
+		var gugun = document.getElementById("gugun");
+		var selectGugun = gugun.options[gugun.selectedIndex].value;
+		location.href="/addr/list?page=${page}&pageCount=${pageCount}&ad_sido=${ad_sido}&ad_gugun="+selectGugun;
 	}
 </script>
 
-<select name ="ad_sido">
+<select name ="ad_sido" id="sido" onchange="changeSelectSido()">
 <c:forEach items="${asList}" var="sido">
-	<option value="${sido}">${sido}</option>
+	<option value="${sido}"<c:if test="${ad_sido==sido}"> selected </c:if>>${sido}</option>
 </c:forEach>
 </select>
-<select name ="ad_gugun">
+<select name ="ad_gugun" id="gugun" onchange="changeSelectGugun()">
 <c:forEach items="${agList}" var="gugun">
-	<option value="${gugun}">${gugun}</option>
+	<option value="${gugun}"<c:if test="${ad_gugun==gugun}"> selected </c:if>>${gugun}</option>
 </c:forEach>
 </select>
-
 
 <label for="ad_dong">읍면동 : </label><input type="text" name="ad_dong" id="ad_dong">
 <button onclick="search()">검색</button>
@@ -64,10 +73,10 @@
 	<tr>
 		<td colspan="7" align="center">
 		<c:if test="${1!=page}">
-			<a href="/addr/list?page=${1}&pageCount=${pageCount}&ad_dong=${ad_dong}">◀</a>
+			<a href="/addr/list?page=${1}&pageCount=${pageCount}&ad_dong=${ad_dong}&ad_sido=${ad_sido}&ad_gugun=${ad_gugun}">◀</a>
 		</c:if>	
 		<c:if test="${page>=11}">
-			<a href="/addr/list?page=${page-10}&pageCount=${pageCount}&ad_dong=${ad_dong}">◁</a>
+			<a href="/addr/list?page=${page-10}&pageCount=${pageCount}&ad_dong=${ad_dong}&ad_sido=${ad_sido}&ad_gugun=${ad_gugun}">◁</a>
 		</c:if>
 		
 		<c:forEach var="p" begin="${fBlock}" end="${lBlock}">
@@ -75,15 +84,15 @@
 				<b>[${p}]</b>
 			</c:if>
 			<c:if test="${p!=page}">
-				<a href="/addr/list?page=${p}&pageCount=${pageCount}&ad_dong=${ad_dong}">[${p}]</a>
+				<a href="/addr/list?page=${p}&pageCount=${pageCount}&ad_dong=${ad_dong}&ad_sido=${ad_sido}&ad_gugun=${ad_gugun}">[${p}]</a>
 			</c:if>
 		</c:forEach>
 		
 			<c:if test="${(totalPageCnt-10)>=page}">
-				<a href="/addr/list?page=${page+10}&pageCount=${pageCount}&ad_dong=${ad_dong}">▷</a>
+				<a href="/addr/list?page=${page+10}&pageCount=${pageCount}&ad_dong=${ad_dong}&ad_sido=${ad_sido}&ad_gugun=${ad_gugun}">▷</a>
 			</c:if>
 			<c:if test="${totalPageCnt!=page}">
-				<a href="/addr/list?page=${totalPageCnt}&pageCount=${pageCount}&ad_dong=${ad_dong}">▶</a>
+				<a href="/addr/list?page=${totalPageCnt}&pageCount=${pageCount}&ad_dong=${ad_dong}&ad_sido=${ad_sido}&ad_gugun=${ad_gugun}">▶</a>
 			</c:if>
 		</td>
 		
